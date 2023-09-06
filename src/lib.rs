@@ -48,23 +48,40 @@ impl PlaceDetector {
     }
 
     pub fn get_place_type(&self, place_name: &str) -> PlaceType {
-        if self.country_data.contains_key(place_name) {
+        if self.country_data.contains_key(&place_name.to_lowercase()) {
             PlaceType::Country
-        } else if self.state_data.contains_key(place_name) {
+        } else if self.state_data.contains_key(&place_name.to_lowercase()) {
             PlaceType::USAState
         } else {
             PlaceType::Other
         }
     }
 
-    pub fn get_capital(&self, place_name: &str) -> Option<&str> {
-        if let Some(capital) = self.country_data.get(place_name) {
-            Some(capital)
-        } else if let Some(capital) = self.state_data.get(place_name) {
-            Some(capital)
+    pub fn get_capital(&self, place_name: &str) -> Option<String> {
+        if let Some(capital) = self.country_data.get(&place_name.to_lowercase()) {
+            let formatted_capital = PlaceDetector::capitalize_string(capital);
+            Some(formatted_capital)
+        } else if let Some(capital) = self.state_data.get(&place_name.to_lowercase()) {
+            let formatted_capital = PlaceDetector::capitalize_string(capital);
+            Some(formatted_capital)
         } else {
             None
         }
+    }
+
+    fn capitalize_string(capital: &str) -> String {
+        capital
+        .split_whitespace()
+        .map(|word| {
+            let mut chars = word.chars();
+            match chars.next() {
+                None => String::new(),
+                Some(first_char) => first_char.to_uppercase().collect::<String>()
+                    + chars.as_str(),
+            }
+        })
+        .collect::<Vec<String>>()
+        .join(" ")
     }
 }
 
@@ -91,41 +108,41 @@ mod tests {
     fn test_get_place_type_country() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if a known country is correctly identified as a country.
-        assert_eq!(place_detector.get_place_type("india"), PlaceType::Country);
+        assert_eq!(place_detector.get_place_type("India"), PlaceType::Country);
     }
 
     #[test]
     fn test_get_place_type_us_state() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if a known US state is correctly identified as a US state.
-        assert_eq!(place_detector.get_place_type("texas"), PlaceType::USAState);
+        assert_eq!(place_detector.get_place_type("Texas"), PlaceType::USAState);
     }
 
     #[test]
     fn test_get_place_type_other() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if an unknown place is correctly identified as "Other".
-        assert_eq!(place_detector.get_place_type("las vegas"), PlaceType::Other);
+        assert_eq!(place_detector.get_place_type("Las Vegas"), PlaceType::Other);
     }
 
     #[test]
     fn test_get_capital_country() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if the capital of a known country is returned correctly.
-        assert_eq!(place_detector.get_capital("switzerland"), Some("bern"));
+        assert_eq!(place_detector.get_capital("Kiribati"), Some("Tarawa Atoll".to_string()));
     }
 
     #[test]
     fn test_get_capital_us_state() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if the capital of a known US state is returned correctly.
-        assert_eq!(place_detector.get_capital("texas"), Some("austin"));
+        assert_eq!(place_detector.get_capital("Utah"), Some("Salt Lake City".to_string()));
     }
 
     #[test]
     fn test_get_capital_other() {
         let place_detector = PlaceDetector::new().unwrap_or_default();
         // Test if an unknown place returns None for capital.
-        assert_eq!(place_detector.get_capital("mumbai"), None);
+        assert_eq!(place_detector.get_capital("Mumbai"), None);
     }
 }
