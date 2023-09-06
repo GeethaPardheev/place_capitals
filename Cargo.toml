@@ -1,6 +1,6 @@
 [package]
 name = "place_capitals"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Get place capitals for countries and USA states"
 license = "MIT"
