@@ -30,7 +30,7 @@ use place_capitals::PlaceDetector;
 ```rust
 fn main() {
     // Create a new PlaceDetector instance
-    let detector = PlaceDetector::default();
+    let detector = PlaceDetector::new();
     
     // Check if a place is a country
     let is_country = detector.is_country("France");
@@ -51,7 +51,7 @@ fn main() {
 ```rust
 fn main() {
     // Create a new PlaceDetector instance
-    let detector = PlaceDetector::default();
+    let detector = PlaceDetector::new();
     
     // Get the capital of a country
     let country_capital = detector.get_capital("France");
