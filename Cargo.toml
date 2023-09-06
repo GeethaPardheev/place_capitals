@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Place Capitals Crate is a Rust library designed to provide easy access to static data related to countries, their capitals, and USA states and their capitals. This crate offers convenient functions to check whether a given place is a country or a USA state, as well as the ability to retrieve the capital for a given place."
 license = "MIT"
+homepage = "https://github.com/GeethaPardheev/place_capitals"
+repository = "https://github.com/GeethaPardheev/place_capitals"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
