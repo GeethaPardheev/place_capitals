@@ -73,4 +73,4 @@ This crate is distributed under the terms of the MIT License. See the [LICENSE](
 
 ## Contribution
 
-Contributions to this crate are welcome! If you encounter any issues or have ideas for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/yourusername/place-capitals).
+Contributions to this crate are welcome! If you encounter any issues or have ideas for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/GeethaPardheev/place_capitals).
